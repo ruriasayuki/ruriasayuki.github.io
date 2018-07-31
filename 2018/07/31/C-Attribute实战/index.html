@@ -108,23 +108,25 @@
 
 
 
-  <meta name="description" content="浅雪的学习和随笔集">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Asayukiの杂思">
-<meta property="og:url" content="https://ruriasayuki.github.io/index.html">
+  <meta name="description" content="反射的实际使用反射即获取类的内部构造，这个特性对于写习惯了Javascript的人而言是相当自然的。但是再其它语言中就要通过别的方法来支持。毕竟编译器编译完了之后，什么类名，成员名，统统都是不存在的东西，也没有了所谓的获取的方法。个人猜测支持反射这项特性的话，就需要再编译时抽出一块空间来存储编译所用到的所有类型信息。 以下是两个实例： 配合Attribute 实现一些特定的功能配合Attribut">
+<meta name="keywords" content="language C#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#Attribute实战">
+<meta property="og:url" content="https://ruriasayuki.github.io/2018/07/31/C-Attribute实战/index.html">
 <meta property="og:site_name" content="Asayukiの杂思">
-<meta property="og:description" content="浅雪的学习和随笔集">
+<meta property="og:description" content="反射的实际使用反射即获取类的内部构造，这个特性对于写习惯了Javascript的人而言是相当自然的。但是再其它语言中就要通过别的方法来支持。毕竟编译器编译完了之后，什么类名，成员名，统统都是不存在的东西，也没有了所谓的获取的方法。个人猜测支持反射这项特性的话，就需要再编译时抽出一块空间来存储编译所用到的所有类型信息。 以下是两个实例： 配合Attribute 实现一些特定的功能配合Attribut">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-07-31T08:38:15.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Asayukiの杂思">
-<meta name="twitter:description" content="浅雪的学习和随笔集">
+<meta name="twitter:title" content="C#Attribute实战">
+<meta name="twitter:description" content="反射的实际使用反射即获取类的内部构造，这个特性对于写习惯了Javascript的人而言是相当自然的。但是再其它语言中就要通过别的方法来支持。毕竟编译器编译完了之后，什么类名，成员名，统统都是不存在的东西，也没有了所谓的获取的方法。个人猜测支持反射这项特性的话，就需要再编译时抽出一块空间来存储编译所用到的所有类型信息。 以下是两个实例： 配合Attribute 实现一些特定的功能配合Attribut">
 
 
 
 
 
 
-  <link rel="canonical" href="https://ruriasayuki.github.io/"/>
+  <link rel="canonical" href="https://ruriasayuki.github.io/2018/07/31/C-Attribute实战/"/>
 
 
 
@@ -134,7 +136,7 @@
   };
 </script>
 
-  <title>Asayukiの杂思</title>
+  <title>C#Attribute实战 | Asayukiの杂思</title>
   
 
 
@@ -181,8 +183,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -223,7 +224,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
     <a href="/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
   </li>
@@ -267,9 +268,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -301,11 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/31/C-Attribute实战/" itemprop="url">
-                  C#Attribute实战
-                </a>
+          <h1 class="post-title" itemprop="name headline">C#Attribute实战
               
             
           </h1>
@@ -368,15 +365,11 @@
       
 
       
-        
-          
-            <h1 id="反射的实际使用"><a href="#反射的实际使用" class="headerlink" title="反射的实际使用"></a>反射的实际使用</h1><p><code>反射</code>即获取类的内部构造，这个特性对于写习惯了<code>Javascript</code>的人而言是相当自然的。但是再其它语言中就要通过别的方法来支持。毕竟编译器编译完了之后，什么类名，成员名，统统都是不存在的东西，也没有了所谓的获取的方法。个人猜测支持反射这项特性的话，就需要再编译时抽出一块空间来存储编译所用到的所有类型信息。</p>
+        <h1 id="反射的实际使用"><a href="#反射的实际使用" class="headerlink" title="反射的实际使用"></a>反射的实际使用</h1><p><code>反射</code>即获取类的内部构造，这个特性对于写习惯了<code>Javascript</code>的人而言是相当自然的。但是再其它语言中就要通过别的方法来支持。毕竟编译器编译完了之后，什么类名，成员名，统统都是不存在的东西，也没有了所谓的获取的方法。个人猜测支持反射这项特性的话，就需要再编译时抽出一块空间来存储编译所用到的所有类型信息。</p>
 <p>以下是两个实例：</p>
 <h2 id="配合Attribute-实现一些特定的功能"><a href="#配合Attribute-实现一些特定的功能" class="headerlink" title="配合Attribute 实现一些特定的功能"></a>配合Attribute 实现一些特定的功能</h2><p>配合Attribute是因为Attribute也是绑定在类的信息上面的，也需要通过反射来进行访问。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">DataGridHelper</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAttrColumns</span>(<span class="params">Type someType, DataGridView dataGridView</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            addAttrColumns(someType, dataGridView, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAttrColumns</span>(<span class="params">Type someType, DataGridView dataGridView,<span class="keyword">int</span> priority</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            IList&lt;<span class="keyword">string</span>&gt; AttrProp = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line"></span><br><span class="line">            MemberInfo[] info = someType.GetMembers();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; info.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">object</span>[] attributes = info[i].GetCustomAttributes(<span class="literal">true</span>);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; attributes.Length; j++)</span><br><span class="line">                &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (attributes[j].ToString() == <span class="string">"Asayuki.Common.DataArr"</span>)<span class="comment">//Attribute名字</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        AttrProp.Add(info[i].ToString() + <span class="string">'_'</span> + ((DataArr)attributes[j]).name + <span class="string">'_'</span> + ((DataArr)attributes[j]).width+<span class="string">'_'</span>+((DataArr)attributes[j]).priority);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">string</span> a <span class="keyword">in</span> AttrProp)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> cp = <span class="keyword">int</span>.Parse(a.ToString().Split(<span class="string">'_'</span>)[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">if</span> (cp &lt;= priority)</span><br><span class="line">                &#123;</span><br><span class="line">                    DataGridViewColumn column = <span class="keyword">new</span> DataGridViewTextBoxColumn();</span><br><span class="line">                    column.DataPropertyName = a.ToString().Split(<span class="string">'_'</span>)[<span class="number">0</span>].Split(<span class="string">' '</span>)[<span class="number">1</span>];</span><br><span class="line">                    column.Name = a.ToString().Split(<span class="string">'_'</span>)[<span class="number">1</span>];</span><br><span class="line">                    column.Width = <span class="keyword">int</span>.Parse(a.ToString().Split(<span class="string">'_'</span>)[<span class="number">2</span>]);</span><br><span class="line">                    dataGridView.Columns.Add(column);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="根据输入的类自动生成对应的SQL语句"><a href="#根据输入的类自动生成对应的SQL语句" class="headerlink" title="根据输入的类自动生成对应的SQL语句"></a>根据输入的类自动生成对应的SQL语句</h2><p>通过获取类的成员名和成员类型，可以很自然的生成想要的SQL语句。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> generateInsertSQL&lt;T&gt;(T model,<span class="keyword">string</span> tableName)</span><br><span class="line">        &#123;</span><br><span class="line">            StringBuilder sqlStr = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            PropertyInfo[] info = model.GetType().GetProperties();</span><br><span class="line">            <span class="keyword">string</span> modelName = tableName;</span><br><span class="line">            List&lt;<span class="keyword">string</span>&gt; nameList = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">            List&lt;<span class="keyword">object</span>&gt; valueList = <span class="keyword">new</span> List&lt;<span class="keyword">object</span>&gt;();</span><br><span class="line">            <span class="keyword">foreach</span> (PropertyInfo item <span class="keyword">in</span> info)</span><br><span class="line">            &#123;</span><br><span class="line">                nameList.Add(item.Name);</span><br><span class="line">                valueList.Add(item.GetValue(model, <span class="literal">null</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            sqlStr.Append(<span class="string">"insert into "</span> + modelName + <span class="string">"("</span>);</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> name <span class="keyword">in</span> nameList)</span><br><span class="line">            &#123;</span><br><span class="line">                sqlStr.Append(name+<span class="string">","</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            sqlStr.Remove(sqlStr.Length - <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">            sqlStr.Append(<span class="string">") Values("</span>);</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> <span class="keyword">value</span> <span class="keyword">in</span> valueList)</span><br><span class="line">            &#123;</span><br><span class="line">                sqlStr.Append(<span class="string">"'"</span> +<span class="keyword">value</span>.ToString()+ <span class="string">"',"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            sqlStr.Remove(sqlStr.Length - <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">            sqlStr.Append(<span class="string">")"</span>);</span><br><span class="line">            <span class="keyword">return</span> sqlStr.ToString();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
 
-          
-        
       
     </div>
 
@@ -394,204 +387,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ruriasayuki.github.io/2018/07/11/javaScript解惑/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ruri Asauiki">
-      <meta itemprop="description" content="浅雪的学习和随笔集">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Asayukiの杂思">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/11/javaScript解惑/" itemprop="url">
-                  javaScript解惑
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-07-11 11:53:08" itemprop="dateCreated datePublished" datetime="2018-07-11T11:53:08+08:00">2018-07-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-07-31 16:38:02" itemprop="dateModified" datetime="2018-07-31T16:38:02+08:00">2018-07-31</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/language-C/" rel="tag"># language C#</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="JavaScript-神奇之旅"><a href="#JavaScript-神奇之旅" class="headerlink" title="JavaScript 神奇之旅"></a>JavaScript 神奇之旅</h1><p>今天在网上看见一张图片，描述了JavaScript作为一门“神奇”的语言有着许许多多所谓的特性，下面让我们来一一探索一下。(参考书：犀牛书)</p>
-<h2 id="1-抽风的数字类型"><a href="#1-抽风的数字类型" class="headerlink" title="1. 抽风的数字类型"></a>1. 抽风的数字类型</h2><h3 id="1-1-NaN"><a href="#1-1-NaN" class="headerlink" title="1.1. NaN"></a>1.1. NaN</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="keyword">typeof</span> <span class="literal">NaN</span> </span><br><span class="line">&lt;·  <span class="string">"number"</span></span><br></pre></td></tr></table></figure>
-<p><code>NaN</code>是js预定义的全局变量，用以表示0/0的结果。而其被定义为number类型。也可以通过<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="literal">NaN</span>)</span><br></pre></td></tr></table></figure></p>
-<p>这样的操作来构建NaN对象。</p>
-<p>(其实是IEEE标准定义的)</p>
-<p>关于typeof，还有一个有趣的结论应该就是<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="keyword">typeof</span> <span class="literal">null</span></span><br><span class="line">&lt;·  <span class="string">"object"</span></span><br></pre></td></tr></table></figure></p>
-<p>这是由于null的开头第一位的内部编码和object一样的原因，不然就会是<code>undefined</code>。</p>
-<h3 id="1-2-迷之相等"><a href="#1-2-迷之相等" class="headerlink" title="1.2. 迷之相等"></a>1.2. 迷之相等</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="number">9999999999999999</span></span><br><span class="line">&lt;·  <span class="number">10000000000000000</span></span><br><span class="line">&gt;   <span class="number">0.5</span>+<span class="number">0.1</span>==<span class="number">0.6</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br><span class="line">&gt;   <span class="number">0.1</span>+<span class="number">0.2</span>==<span class="number">0.3</span></span><br><span class="line">&lt;·  <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<p>首先，js真的不能进行精确的计算，如果涉及精确的计算，建议自行设计高精度算法。要问为什么，那就是因为js完全没有整数类型，它的所有number类型(NaN等奇怪的东西)除外，都是浮点数。</p>
-<p>js完全采用IEEE754标准的64位方案来表示其数字，从而，根据犀牛书所指出的，其能够准确表示的整数范围只到9007 1992 5474 0992 (这里正好16个数)，而16个9，就有着被表示成1*10^16的危险。然而，在js它parseNumber的时候，在后面的幂大于20的时候才会显示成科学计数法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="number">999999999999999990000</span></span><br><span class="line">&lt;·  <span class="number">1e+21</span></span><br></pre></td></tr></table></figure></p>
-<p>整数部分尚且可以在二进制下精确表达，但是小数部分，则是真的很容易产生误差。二进制下的小数部分，只能精确表示能被拆分成(1/2)^n的和的部分，剩下的部分，就或多或少有着偷工减料了。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="number">0.5</span>+<span class="number">0.1</span></span><br><span class="line">&lt;·  <span class="number">0.6</span></span><br><span class="line">&gt;   <span class="number">0.1</span>+<span class="number">0.2</span></span><br><span class="line">&lt;·  <span class="number">0.30000000000000004</span></span><br></pre></td></tr></table></figure></p>
-<p>这同时也意味着在处理小数是否相等时，js中需要进行的是差值在多少范围内的比较，而不能用相等直接比较。</p>
-<h3 id="1-3-代劳了的初始化"><a href="#1-3-代劳了的初始化" class="headerlink" title="1.3. 代劳了的初始化"></a>1.3. 代劳了的初始化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="built_in">Math</span>.max()</span><br><span class="line">&lt;·  -<span class="literal">Infinity</span></span><br><span class="line">&gt;   <span class="built_in">Math</span>.min()</span><br><span class="line">&lt;·  <span class="literal">Infinity</span></span><br></pre></td></tr></table></figure>
-<p>这个还真的不能算bug，平时题目做多了的人可能就注意到了这个用意，一般而言，最大最小值还真就是这么初始化的。为了方便得进行后续取最大和最小值的比较和判断。</p>
-<h2 id="2-迷之类型转化"><a href="#2-迷之类型转化" class="headerlink" title="2. 迷之类型转化"></a>2. 迷之类型转化</h2><p>后面一整串，其实在犀牛书关于js的类型自动转化之中都有详细解答。所以都列在这里了:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;   []+[]</span><br><span class="line">&lt;·  <span class="string">""</span></span><br><span class="line">&gt;   []+&#123;&#125;</span><br><span class="line">&lt;·  <span class="string">"[object Object]"</span></span><br><span class="line">&gt;   &#123;&#125;+[]</span><br><span class="line">&lt;·  <span class="number">0</span></span><br><span class="line">&gt;   <span class="literal">true</span>+<span class="literal">true</span>+<span class="literal">true</span>===<span class="number">3</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br><span class="line">&gt;   <span class="literal">true</span>-<span class="literal">true</span></span><br><span class="line">&lt;·  <span class="number">0</span></span><br><span class="line">&gt;   <span class="literal">true</span>==<span class="number">1</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br><span class="line">&gt;   <span class="literal">true</span>===<span class="number">1</span></span><br><span class="line">&lt;·  <span class="literal">false</span></span><br><span class="line">&gt;   (!+[]+[]+![]).length</span><br><span class="line">&lt;·  <span class="number">9</span></span><br><span class="line">&gt;   <span class="number">9</span>+<span class="string">"1"</span></span><br><span class="line">&lt;·  <span class="string">"91"</span></span><br><span class="line">&gt;   <span class="number">91</span>-<span class="string">"1"</span></span><br><span class="line">&lt;·  <span class="number">90</span></span><br><span class="line">&gt;   []==<span class="number">0</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
-<p>但是首先，我们要来讲讲运算符。</p>
-<p><code>+</code> 加号在js中可以用作number类型的加法运算，也可以用来拼接string。所以参与加法运算的两个参数都需要将数据类型转化为对应的number或者是string。</p>
-<p>而js中，只要参与运算的对象不全是number类型，就会发生各种迷之操作。</p>
-<p>首先，对象会去调用各自的valueOf()，用valueOf的结果来继续运算(valueOf的结果各种各样，但是会是js的四种基本类型 string、bool、number、object之一)，但是不幸的是，一般对象都不会有这个玩意儿，而可以进行valueOf()并且产生number返回值<code>(就是那个距离创世日的毫秒数)</code>的日期对象，在这里会强制调用toString()，所以一般都会直接进入调用各自的toString()然后进行字符串拼接。(如果调用完valueOf()之后，加法两端可以进行数学意义上的加法，那么就会进行啦，不然还是字符串拼接)</p>
-<p>js面对加法，没有不择手段的进行数学加法运算，而是不择手段的进行字符串拼接。</p>
-<p>那么我们根据以上法则，一个个看过去。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]+[]</span><br></pre></td></tr></table></figure></p>
-<p><code>[]</code>数组的valueOf()会直接返回””空字符串，所以结果是空字符串，没有任何毛病。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]+&#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>[]的valueOf()依然会返回空字符串，这没有任何问题。</p>
-<p>而<code>{}</code>作为object其valueOf()的结果依然是object，因此就会调用toString()，产生返回值”[object object]”。从而凭借字符串，产生结果。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;+[]</span><br></pre></td></tr></table></figure></p>
-<p>那么你来说说，这个反过来加怎么就可以得到数字了呢。这个我做了下实验，发现如果是对对象进行赋值的再做相加操作的话，正着和倒着的结果是一样的。但是直接输入以上的式子，结果确实是0。那么这里的<code>{}</code>到底被当成什么了呢？<code>花括号</code>，在这里的意思已经不是对象了，而是我们平时用来框语句块的花括号，代表的是一组空白<code>表达式</code>。所以这里已经不是加法的世界了。相当于是在计算：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+[]</span><br></pre></td></tr></table></figure></p>
-<p>而+作为一元运算符的时候，右边的参数优先转化为数字，而[]会转化为0。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="literal">true</span>+<span class="literal">true</span>+<span class="literal">true</span>===<span class="number">3</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br><span class="line">&gt;   <span class="literal">true</span>-<span class="literal">true</span></span><br><span class="line">&lt;·  <span class="number">0</span></span><br><span class="line">&gt;   <span class="literal">true</span>==<span class="number">1</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br><span class="line">&gt;   <span class="literal">true</span>===<span class="number">1</span></span><br><span class="line">&lt;·  <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
-<p>这一串其实，这么看下来应该很好解释，true在做加法运算的时候能够转化成数字(能够成功的valueOf)从而得到数字1。那么1+1+1自然是严格等于3的(毕竟类型转化了，大家都是number)。<br>所以其实这组其实是非常正常的运算结果。</p>
-<p>java的相等<code>==</code>是会考虑valueOf的，而<code>===</code>严格相等是不容含糊的(虽然也会出现各种神奇的结果)。</p>
-<p>那么下面这个式子就自己品味了吧。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;   []==<span class="number">0</span></span><br><span class="line">&lt;·  <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
-<p>而下面这组式子也很好解释：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;   <span class="number">9</span>+<span class="string">"1"</span></span><br><span class="line">&lt;·  <span class="string">"91"</span></span><br><span class="line">&gt;   <span class="number">91</span>-<span class="string">"1"</span></span><br><span class="line">&lt;·  <span class="number">90</span></span><br></pre></td></tr></table></figure></p>
-<p>加法优先考虑字符串连接，减法自然只存在强行计算。如果字符串转化成number失败，计算结果会是NaN。</p>
-<p>那么最后来看看这个式子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(!+[]+[]+![]).length</span><br></pre></td></tr></table></figure></p>
-<p>到底发生了什么</p>
-<p>首先，逻辑非<code>!</code>有着极高的优先级，所以首先计算的是!+[]和![]。</p>
-<p>+[]的结果我们刚刚已经知道了是数字0，对其做逻辑非运算会将数字0直接转化为<code>false</code>，然后再得到<code>true</code>。</p>
-<p>而对[]直接去逻辑非的结果呢？则是对[]直接转化为<code>true</code>再求逻辑非，得到<code>false</code><br>那么式子就变成了<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="literal">true</span>+[]+<span class="literal">false</span>).length</span><br></pre></td></tr></table></figure></p>
-<p>之后如何计算就无需多言了。</p>
-<p>只是觉得其中有得内容确实不错，但是有的内容过于钓鱼，所以甘愿咬勾，写下这篇文字。</p>
-<p>工作中摸鱼，但愿不会被炒。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/11/javaScript解惑/" rel="next" title="javaScript解惑">
+                <i class="fa fa-chevron-left"></i> javaScript解惑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -601,14 +426,15 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -629,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -690,6 +525,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#反射的实际使用"><span class="nav-number">1.</span> <span class="nav-text">反射的实际使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配合Attribute-实现一些特定的功能"><span class="nav-number">1.1.</span> <span class="nav-text">配合Attribute 实现一些特定的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#根据输入的类自动生成对应的SQL语句"><span class="nav-number">1.2.</span> <span class="nav-text">根据输入的类自动生成对应的SQL语句</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -820,6 +671,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
