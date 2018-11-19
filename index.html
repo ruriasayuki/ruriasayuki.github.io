@@ -300,6 +300,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ruriasayuki.github.io/2018/10/18/181018/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ruri Asauiki">
+      <meta itemprop="description" content="浅雪的学习和随笔集">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asayukiの杂思">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/18/181018/" itemprop="url">
+                  Vue 组件开发模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-18 11:53:08" itemprop="dateCreated datePublished" datetime="2018-10-18T11:53:08+08:00">2018-10-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-19 15:34:03" itemprop="dateModified" datetime="2018-11-19T15:34:03+08:00">2018-11-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Vue-组件开发模式"><a href="#Vue-组件开发模式" class="headerlink" title="Vue 组件开发模式"></a>Vue 组件开发模式</h1><p>正是因为之前提到过的那个项目的问题，组内“激进”（因为并非传统软件行业，之前的解决方案一直是微软全家桶（真香），我进组后开始前后分离，用ajax）地决定把前端的技术架构往上提一个档次，所以就开始采用Vue全家桶来进行开发，所以需要对Vue进行一系列集中地学习。而因为种种原因，之前在小页面内采用Vue的双向绑定的特性偷懒的我，就被委以了重任，所以只能开始认真的学习。</p>
+<p>Vue当中，对于页面模块的复用一般通过组件的开发来解决。而组件在实际使用时，父组件往往需要与之进行通信。一方面是需要将子组件所需要的数据交给子组件，另一方面就需要子组件在提交更改的时候能够告知父组件。</p>
+<p>首先，官网的文档明确的指出了，不能仅仅通过修改props传入的对象来偷懒，因为可能会导致一系列的问题。而且，事实上，直接修改props不能达到组件封装、组件间解耦的目的。所以应当设计一套模式，来进行这个过程。</p>
+<h2 id="父组件向下传值"><a href="#父组件向下传值" class="headerlink" title="父组件向下传值"></a>父组件向下传值</h2><p>这个很简单，按照官网给出的解决方案书写就好。</p>
+<p>子组件代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">  param: &#123;</span><br><span class="line">    type: <span class="built_in">Object</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">data () &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    myparam: <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.param)) <span class="comment">// 接收父组件传入值</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;,</span><br><span class="line">created () &#123;</span><br><span class="line">  <span class="comment">// 对参数进行一系列的处理，比如：</span></span><br><span class="line">  Vue.set(<span class="keyword">this</span>.myparam, <span class="string">'counter'</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>父组件页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">my-component</span> <span class="attr">:param</span>=<span class="string">"someObject"</span>&gt;</span><span class="tag">&lt;/<span class="name">my-component</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样就避免了子组件去直接修改props的问题。</p>
+<h2 id="子组件向父组件推送数据"><a href="#子组件向父组件推送数据" class="headerlink" title="子组件向父组件推送数据"></a>子组件向父组件推送数据</h2><p>子组件向父组件同步数据也很简单，通过一个全局自定义事件即可。</p>
+<p>子组件代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">methods： &#123;</span><br><span class="line">  pushData () &#123;</span><br><span class="line">    <span class="keyword">this</span>.$emit(<span class="string">'myevent'</span>,<span class="keyword">this</span>.myparam);<span class="comment">// 这里把子组件处理过的参数传回去</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>父组件也可以简单的通过这个事件来接收数据。</p>
+<p>父组件页面代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">my-component</span> <span class="attr">:param</span>=<span class="string">"someObject"</span> @<span class="attr">pushData</span>=<span class="string">"getData"</span>&gt;</span><span class="tag">&lt;/<span class="name">my-component</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>父组件代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  getData (recievedData) &#123;</span><br><span class="line">    <span class="comment">// 做一些处理，比如：</span></span><br><span class="line">    <span class="keyword">this</span>.dataList.push(recievedData);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="完成封装"><a href="#完成封装" class="headerlink" title="完成封装"></a>完成封装</h2><p>如果说，以上这样子就完了的话，那么应该也就是网上随便一查就可以整理出来的模式。为了组件复用和解耦，对以上代码又进行整理。</p>
+<p>子组件代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    param: &#123;</span><br><span class="line">      type: <span class="built_in">Object</span></span><br><span class="line">    &#125;,</span><br><span class="line">    options: &#123;</span><br><span class="line">      type: <span class="built_in">Object</span> <span class="comment">// 增加选项参数</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      myparam: <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.param)), <span class="comment">// 接收父组件传入值</span></span><br><span class="line">      myevent: <span class="keyword">this</span>.options.eventName <span class="comment">// 获取需要注册的事件名称（或者是列表 etc……）</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="comment">// 对参数进行一系列的处理，比如：</span></span><br><span class="line">    Vue.set(<span class="keyword">this</span>.myparam, <span class="string">'counter'</span>, <span class="number">0</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    pushData () &#123;</span><br><span class="line">      <span class="keyword">this</span>.$emit(<span class="keyword">this</span>.myevent,<span class="keyword">this</span>.myparam);<span class="comment">// 这里把子组件处理过的参数传回去</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>父组件页面代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">my-component</span> <span class="attr">:param</span>=<span class="string">"someObject"</span> <span class="attr">:options</span>=<span class="string">"myComponentOption"</span> @<span class="attr">pushData</span>=<span class="string">"getData"</span>&gt;</span><span class="tag">&lt;/<span class="name">my-component</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>父组件代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myComponentOption = &#123;</span><br><span class="line">  eventName: <span class="string">'pushData'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      someObject: &#123;&#125;,</span><br><span class="line">      dataList: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  methods: &#123;</span><br><span class="line">    getData (recievedData) &#123;</span><br><span class="line">    <span class="comment">// 做一些处理，比如：</span></span><br><span class="line">    <span class="keyword">this</span>.dataList.push(recievedData);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>按照这样的模式书写，基本上就可以达到模块复用和解耦的目的啦，撒花。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ruriasayuki.github.io/2018/07/31/C-Attribute实战/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -390,6 +559,167 @@
 <p>以下是两个实例：</p>
 <h2 id="配合Attribute-实现一些特定的功能"><a href="#配合Attribute-实现一些特定的功能" class="headerlink" title="配合Attribute 实现一些特定的功能"></a>配合Attribute 实现一些特定的功能</h2><p>配合Attribute是因为Attribute也是绑定在类的信息上面的，也需要通过反射来进行访问。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">DataGridHelper</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAttrColumns</span>(<span class="params">Type someType, DataGridView dataGridView</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            addAttrColumns(someType, dataGridView, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAttrColumns</span>(<span class="params">Type someType, DataGridView dataGridView,<span class="keyword">int</span> priority</span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            IList&lt;<span class="keyword">string</span>&gt; AttrProp = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line"></span><br><span class="line">            MemberInfo[] info = someType.GetMembers();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; info.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">object</span>[] attributes = info[i].GetCustomAttributes(<span class="literal">true</span>);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; attributes.Length; j++)</span><br><span class="line">                &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (attributes[j].ToString() == <span class="string">"Asayuki.Common.DataArr"</span>)<span class="comment">//Attribute名字</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        AttrProp.Add(info[i].ToString() + <span class="string">'_'</span> + ((DataArr)attributes[j]).name + <span class="string">'_'</span> + ((DataArr)attributes[j]).width+<span class="string">'_'</span>+((DataArr)attributes[j]).priority);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">string</span> a <span class="keyword">in</span> AttrProp)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> cp = <span class="keyword">int</span>.Parse(a.ToString().Split(<span class="string">'_'</span>)[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">if</span> (cp &lt;= priority)</span><br><span class="line">                &#123;</span><br><span class="line">                    DataGridViewColumn column = <span class="keyword">new</span> DataGridViewTextBoxColumn();</span><br><span class="line">                    column.DataPropertyName = a.ToString().Split(<span class="string">'_'</span>)[<span class="number">0</span>].Split(<span class="string">' '</span>)[<span class="number">1</span>];</span><br><span class="line">                    column.Name = a.ToString().Split(<span class="string">'_'</span>)[<span class="number">1</span>];</span><br><span class="line">                    column.Width = <span class="keyword">int</span>.Parse(a.ToString().Split(<span class="string">'_'</span>)[<span class="number">2</span>]);</span><br><span class="line">                    dataGridView.Columns.Add(column);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="根据输入的类自动生成对应的SQL语句"><a href="#根据输入的类自动生成对应的SQL语句" class="headerlink" title="根据输入的类自动生成对应的SQL语句"></a>根据输入的类自动生成对应的SQL语句</h2><p>通过获取类的成员名和成员类型，可以很自然的生成想要的SQL语句。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> generateInsertSQL&lt;T&gt;(T model,<span class="keyword">string</span> tableName)</span><br><span class="line">        &#123;</span><br><span class="line">            StringBuilder sqlStr = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            PropertyInfo[] info = model.GetType().GetProperties();</span><br><span class="line">            <span class="keyword">string</span> modelName = tableName;</span><br><span class="line">            List&lt;<span class="keyword">string</span>&gt; nameList = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">            List&lt;<span class="keyword">object</span>&gt; valueList = <span class="keyword">new</span> List&lt;<span class="keyword">object</span>&gt;();</span><br><span class="line">            <span class="keyword">foreach</span> (PropertyInfo item <span class="keyword">in</span> info)</span><br><span class="line">            &#123;</span><br><span class="line">                nameList.Add(item.Name);</span><br><span class="line">                valueList.Add(item.GetValue(model, <span class="literal">null</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            sqlStr.Append(<span class="string">"insert into "</span> + modelName + <span class="string">"("</span>);</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> name <span class="keyword">in</span> nameList)</span><br><span class="line">            &#123;</span><br><span class="line">                sqlStr.Append(name+<span class="string">","</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            sqlStr.Remove(sqlStr.Length - <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">            sqlStr.Append(<span class="string">") Values("</span>);</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> <span class="keyword">value</span> <span class="keyword">in</span> valueList)</span><br><span class="line">            &#123;</span><br><span class="line">                sqlStr.Append(<span class="string">"'"</span> +<span class="keyword">value</span>.ToString()+ <span class="string">"',"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            sqlStr.Remove(sqlStr.Length - <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">            sqlStr.Append(<span class="string">")"</span>);</span><br><span class="line">            <span class="keyword">return</span> sqlStr.ToString();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ruriasayuki.github.io/2018/07/11/181010/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ruri Asauiki">
+      <meta itemprop="description" content="浅雪的学习和随笔集">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asayukiの杂思">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/11/181010/" itemprop="url">
+                  Promise
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-11 11:53:08" itemprop="dateCreated datePublished" datetime="2018-07-11T11:53:08+08:00">2018-07-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-19 15:34:32" itemprop="dateModified" datetime="2018-11-19T15:34:32+08:00">2018-11-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目需要在前端对多张图片压缩后进行上传，而js前端压缩图片会进入异步模式，需要等到所有图片的压缩全部完成之时才能执行上传动作，所以需要<code>Promise</code>进行同步。</p>
+<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><p>之前是一直知道js有<code>Promise</code>一说的，而且经常在调用别人的框架的时候使用到。（比如加载地图json数据的时候，别人也会有<code>loadGeoJson(‘somePath’).then(somefunction())</code>的写法）但是本人工作中一直在js代码上回避回调地狱，常常一个<code>async:false</code>敷衍了事，所以就对此不甚了解，昨日接近下班得知这里要增加前端压缩图片来提升性能，发现最简单的方法就是在上传前把图片都过一个压缩函数（当然也可以把整个上传图片的控件换成别人全部写好的那种，不过改动会多很多，这里还是一个比较简单的input实现），然而上网查了半天，也没有发现不通过回调的压缩图片方法，遂硬着头皮啃了半小时有关内容，把代码写好，下班。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> asyncTask = <span class="function">(<span class="params">file</span>) =&gt;</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;<span class="comment">//通过箭头函数确保file参数能够传入</span></span><br><span class="line">    photoCompress(file, &#123;</span><br><span class="line">        quality: <span class="number">0.2</span></span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">base64Codes</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> bl = convertBase64UrlToBlob(base64Codes);</span><br><span class="line">        compressFiles.push(bl);</span><br><span class="line">        resolve(<span class="string">'next'</span>);<span class="comment">//此处调用resolve函数，进入下一个任务</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line"><span class="keyword">var</span> compressAll = <span class="function"><span class="keyword">function</span> (<span class="params">files</span>) </span>&#123;<span class="comment">//构建任务队列</span></span><br><span class="line">    <span class="keyword">var</span> asyncTasks = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; files.length; i++) &#123;</span><br><span class="line">        asyncTasks.push(asyncTask(files[i]));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> asyncTasks;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line"><span class="built_in">Promise</span>.all(compressAll(files)).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//开始整理表单数据 上传包含压缩后图片的表单</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="原生实现Promise"><a href="#原生实现Promise" class="headerlink" title="原生实现Promise"></a>原生实现Promise</h2><p>下班之后，就开始思考Promise如何用js进行原生实现。发现主要问题出在new Promise(someFunction(resolve))上面，这里通过注入一个resolve函数，好让Promise.All()对任务队列进行调度，在真的调用有关函数的时候，只有到了resolve()这里才会开始调用下面的函数，于是就开始着手编码。<br>首先，我们把任务们封装成带有resolve函数的函数。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> asyncTask = <span class="function">(<span class="params">params</span>) =&gt;</span> (resolve) =&gt;&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(params);</span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	resolve();</span><br><span class="line">&#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为了能实现类似<code>Promise.all().then()</code>这样优雅的写法，理应构建一个Promise对象，而它有一个函数<code>all</code>，而all()在最后一个resolve执行完毕后返回的对象能够有一个then的函数，并且会自动调用之。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125; <span class="comment">//简单的搞了个对象</span></span><br><span class="line"><span class="built_in">Promise</span>.prototype.all = <span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">//任务计数器</span></span><br><span class="line">	<span class="keyword">var</span> resolve = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		count = count + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(count&lt;tasks.length)</span><br><span class="line">		&#123;</span><br><span class="line">			tasks[count](resolve);<span class="comment">//触发后进行下一个任务</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	tasks[<span class="number">0</span>](resolve);<span class="comment">//开始任务</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> generateTasks = <span class="function"><span class="keyword">function</span> (<span class="params">num</span>) </span>&#123;<span class="comment">//生成任务序列</span></span><br><span class="line">        <span class="keyword">var</span> asyncTasks = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            asyncTasks.push(asyncTask(i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> asyncTasks;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">var</span> myPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>();</span><br><span class="line">	$(<span class="string">'#test'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		myPromise.all(generateTasks(<span class="number">10</span>));</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>测试之后，延时执行效果明显，显然是成功的模拟了Promise的功能。但是问题来了，按照这样子的写法，无法实现<code>then</code>的功能。因为<code>all</code>函数在执行了开始第一个任务的函数后，就返回了，而按照js的执行顺序，在<code>all</code>执行完之后才能获取<code>then</code>的函数参数，也不能提前将其挂载到任务链上。</p>
+<p>思考后，先尝试了如下的写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">Promise</span>.prototype.tasks = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"><span class="built_in">Promise</span>.prototype.all= <span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.tasks = tasks;<span class="comment">//储存任务列表</span></span><br><span class="line">	<span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">var</span> resolve = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		count = count + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(count&lt;_this.tasks.length)</span><br><span class="line">		&#123;</span><br><span class="line">			_this.tasks[count](resolve);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">this</span>.tasks[<span class="number">0</span>](resolve);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Promise</span>.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> resolveFunc = <span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>)</span>&#123;</span><br><span class="line">		func();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">this</span>.tasks.push(resolveFunc);<span class="comment">//将then后的函数放置入队列末尾</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>();</span><br><span class="line">	$(<span class="string">'#test'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		myPromise.all(generateTasks(<span class="number">10</span>)).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">'over'</span>)&#125;);</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>测试结果完美，但是可能存在then后面的函数来不及挂载而tasks队列已经向下执行的可能。进行了相关测试，确认了在取消了原任务链中的延时时，确实无法触发then后面的代码。<br>于是做了如下改动：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.prototype.all= <span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.tasks = tasks;</span><br><span class="line">	<span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">var</span> resolve = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		count = count + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(count&lt;_this.tasks.length)</span><br><span class="line">		&#123;</span><br><span class="line">			_this.tasks[count](resolve);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">//在此处增加一个延时，确保then后如果有代码，已经挂载</span></span><br><span class="line">				<span class="keyword">if</span>(count&lt;_this.tasks.length)</span><br><span class="line">				_this.tasks[count](resolve);</span><br><span class="line">			&#125;,<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">this</span>.tasks[<span class="number">0</span>](resolve);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>老板不在，又是一个上午愉快地摸鱼，以上。</p>
 
           
         
@@ -661,7 +991,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
